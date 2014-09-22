@@ -30,7 +30,8 @@ Here are a few working examples below:
     instance.findProcess()
     instance.write(BLACKOPS2_RECOIL_ADDRESS, BLACKOPS2_NORECOIL_VALUE)
 
-#####Changing Cheat Engine's name(so we can find memory addresses through it)
+#####Changing Cheat Engine's Title
 
     from hackManager.hack import Hack
     cheat_engine = Hack.change_window_title("Cheat Engine 6.1", "Changed")
+> This allows use to use Cheat Engine to find memory addresses without it being detected.
