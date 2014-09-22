@@ -7,7 +7,7 @@
 
 Requirements: Python 2.5, 2.6 or 2.7(recommended).
 
-Dependencies: Ctypes, Winappdbg
+Dependencies: Ctypes, Winappdbg(http://winappdbg.sourceforge.net/Downloads.html)
 
 PyPi Installation (Optional): `pip install hackManager`
 
