@@ -17,3 +17,6 @@ PyPi Installation (Optional): `pip install hackManager`
 > **Note:** You can also create anti-hacking software with this library.
 
 Here are a few working examples below:
+
+
+        Call of Duty Black Ops 2 - No Recoil
