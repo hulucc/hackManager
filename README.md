@@ -22,10 +22,15 @@ Here are a few working examples below:
 
     from hackManager.hack import Hack
     
-    BLACKOPS_NORECOIL = 0x004AF328
+    BLACKOPS2_RECOIL_ADDRESS = 0x004AF328
+    BLACKOPS2_NORECOIL_VALUE = 167
     
-    cheat_engine = Hack.change_window_title("Cheat Engine 6.1", "Changed")
     target = "t6mp.exe"
     instance = Hack(target)
     instance.findProcess()
-    print instance.read(BLACKOPS_NORECOIL, 1)
+    instance.write(BLACKOPS2_RECOIL_ADDRESS, BLACKOPS2_NORECOIL_VALUE)
+
+#####Changing Cheat Engine's name(so we can find memory addresses through it)
+
+    from hackManager.hack import Hack
+    cheat_engine = Hack.change_window_title("Cheat Engine 6.1", "Changed")
