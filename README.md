@@ -29,6 +29,7 @@ Here are a few working examples below:
     instance = Hack(target)
     instance.findProcess()
     instance.write(BLACKOPS2_RECOIL_ADDRESS, BLACKOPS2_NORECOIL_VALUE)
+> Singleplayer & Multiplayer hack that removes every weapons recoil effect.
 
 #####Changing Cheat Engine's Title
 
