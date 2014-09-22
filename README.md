@@ -20,12 +20,12 @@ Here are a few working examples below:
 
 #####Call of Duty Black Ops 2 - No Recoil
 
-  from hackManager.hack import Hack
-  
-  BLACKOPS_NORECOIL = 0x004AF328
-  
-  cheat_engine = Hack.change_window_title("Cheat Engine 6.1", "Changed")
-  target = "t6mp.exe"
-  instance = Hack(target)
-  instance.findProcess()
-  print instance.read(BLACKOPS_NORECOIL, 1)
+    from hackManager.hack import Hack
+    
+    BLACKOPS_NORECOIL = 0x004AF328
+    
+    cheat_engine = Hack.change_window_title("Cheat Engine 6.1", "Changed")
+    target = "t6mp.exe"
+    instance = Hack(target)
+    instance.findProcess()
+    print instance.read(BLACKOPS_NORECOIL, 1)
