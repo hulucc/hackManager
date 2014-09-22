@@ -18,7 +18,7 @@ PyPi Installation (Optional): `pip install hackManager`
 
 Here are a few working examples below:
 
-#####Call of Duty Black Ops 2 - No Recoil
+#####Call of Duty Black Ops 2(PC) - No Recoil
 
     from hackManager.hack import Hack
     
