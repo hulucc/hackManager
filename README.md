@@ -12,6 +12,6 @@ Dependencies: Ctypes, Winappdbg
 PyPi Installation (Optional): `pip install hackManager`
 
 
-hackManager was created to streamline the process of hack creation. You can create quick, powerful hacks in Python with a few lines of code.
+> hackManager was created to streamline the process of hack creation. You can create quick, powerful hacks in Python with a few lines of code.
 
 Here are a few working examples below:
