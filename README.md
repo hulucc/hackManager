@@ -21,14 +21,29 @@ Here are a few working examples below:
 #####Call of Duty Black Ops 2(PC) - No Recoil
 
     from hackManager.hack import Hack
-    
-    BLACKOPS2_RECOIL_ADDRESS = 0x004AF328
-    BLACKOPS2_NORECOIL_VALUE = 167
-    
+
+    # Absolute memory address
+    BLACKOPS_RECOIL_ADDRESS = 0x004AF328
+    # You can also supply the base address and a offset like, i.e.:
+    # BLACKOPS_RECOIL_ADDRESS = instance.base_address(0x400000) + 0xAF328
+
+    # No recoil value
+    BLACKOPS_NO_RECOIL_VALUE = 117
+
+    cheat_engine = Hack.change_window_title("Cheat Engine 6.1", "Changed")
     target = "t6mp.exe"
     instance = Hack(target)
     instance.findProcess()
-    instance.write(BLACKOPS2_RECOIL_ADDRESS, BLACKOPS2_NORECOIL_VALUE)
+    # main modules base address (0x400000)
+    print instance.base_address
+    # instance.read_char(BLACKOPS_RECOIL_ADDRESS) returns the following:
+    # ( value, label )
+    #
+    # label is: t6mp.exe(base address) + offset
+    print instance.read_char(BLACKOPS_RECOIL_ADDRESS)
+    # update value with 117(NO RECOIL VALUE)
+    instance.write_char(BLACKOPS_RECOIL_ADDRESS, BLACKOPS_NO_RECOIL_VALUE)
+
 > Singleplayer & Multiplayer hack that removes every weapons recoil effect.
 
 #####Changing Cheat Engine's Title
