@@ -47,3 +47,6 @@ Here are a few working examples below:
             
     # mainloop_check(attr="health") will output the value of health every second.
     Player(name="Charlie", health=100).mainloop_check(attr="health")
+
+I recommend py2exe to compile python scripts to Windows executables.
+(http://www.py2exe.org/)
