@@ -36,3 +36,14 @@ Here are a few working examples below:
     from hackManager.hack import Hack
     cheat_engine = Hack.change_window_title("Cheat Engine 6.1", "Changed")
 > This allows use to use Cheat Engine to find memory addresses without it being detected.
+
+#####Creating test apps for hack testing
+> The purpose of test apps is to learn how to read data structures and access their individual attributes, i.e.: "health", "name", "position", "level", etc.
+
+    from hackManager.test import Test
+    class Player(Test):
+        def __init__(self, name, **kwargs):
+            Test.__init__(self, name, **kwargs)
+            
+    # mainloop_check(attr="health") will output the value of health every second.
+    Player(name="Charlie", health=100).mainloop_check(attr="health")
