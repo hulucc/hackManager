@@ -3,8 +3,8 @@ import os
 
 
 __website__ = "FindADownload.net"
-__author__ = "David Almendarez"
-__version__ = "1.0"
+__author__ = "David A"
+__version__ = "1.1"
 __date__ = "09/21/2014"
 
 
@@ -28,6 +28,7 @@ class Hack(object):
         self.threads = {}
         self.hwnd = None
         self.base_address = None
+        self.last_address = None
         self.running = []
         if processName is not None:
             self.findProcess(processName)
@@ -35,6 +36,11 @@ class Hack(object):
 
     def __repr__(self):
         return "<Hack instance: %s>" %str(self.name)
+
+    def set_last_address(self):
+        self.last_address = self.module_base_dict.get(
+            self.module_base_dict.keys()[::-1][0]
+        )
 
     def get_threads(self):
         """
@@ -106,6 +112,8 @@ class Hack(object):
                 module_name = os.path.basename(module.get_filename())
                 self.module_base_dict[module_name] = module.get_base()
 
+        self.set_last_address()
+
     def read(self, address, length):
         """
         Read process memory. (memory_adress, data_length). \
@@ -113,17 +121,121 @@ class Hack(object):
         """
         process = self.hwnd
         data = process.read( address, length )
-        return data
+        label = process.get_label_at_address( address )
+        return (data, label)
+
+    def read_char(self, address):
+        return (self.hwnd.read_char(address),
+                self.hwnd.get_label_at_address(address))
+
+    def read_int(self, address):
+        return (self.hwnd.read_int(address),
+                self.hwnd.get_label_at_address(address))
+
+    def read_uint(self, address):
+        return (self.hwnd.read_uint(address),
+                self.hwnd.get_label_at_address(address))
+    
+    def read_float(self, address):
+        return (self.hwnd.read_float(address),
+                self.hwnd.get_label_at_address(address))
+
+    def read_double(self, address):
+        return (self.hwnd.read_double(address),
+                self.hwnd.get_label_at_address(address))
+
+    def read_pointer(self, address):
+        return (self.hwnd.read_pointer(address),
+                self.hwnd.get_label_at_address(address))
+
+    def read_dword(self, address):
+        return (self.hwnd.read_dword(address),
+                self.hwnd.get_label_at_address(address))
+
+    def read_qword(self, address):
+        return (self.hwnd.read_qword(address),
+                self.hwnd.get_label_at_address(address))
+
+    def read_structure(self, address):
+        return (self.hwnd.read_structure(address),
+                self.hwnd.get_label_at_address(address))
+
+    def read_string(self, address):
+        return (self.hwnd.read_string(address),
+                self.hwnd.get_label_at_address(address))
 
     def write(self, address, data):
         "Write to process memory. (memory_address, data2write)"""
         process = self.hwnd
-        writen = process.write( address, data )
-        return 1
+        written = process.write( address, data )
+        return written
+
+    def write_char(self, address, data):
+        "Write to process memory. (memory_address, data2write)"""
+        process = self.hwnd
+        written = process.write_char( address, data )
+        return written
+
+    def write_int(self, address, data):
+        "Write to process memory. (memory_address, data2write)"""
+        process = self.hwnd
+        written = process.write_int( address, data )
+        return written
+
+    def write_uint(self, address, data):
+        "Write to process memory. (memory_address, data2write)"""
+        process = self.hwnd
+        written = process.write_uint( address, data )
+        return written
+
+    def write_float(self, address, data):
+        "Write to process memory. (memory_address, data2write)"""
+        process = self.hwnd
+        written = process.write_float( address, data )
+        return written
+
+    def write_double(self, address, data):
+        "Write to process memory. (memory_address, data2write)"""
+        process = self.hwnd
+        written = process.write_double( address, data )
+        return written
+
+    def write_pointer(self, address, data):
+        "Write to process memory. (memory_address, data2write)"""
+        process = self.hwnd
+        written = process.write_pointer( address, data )
+        return written
+
+    def write_dword(self, address, data):
+        "Write to process memory. (memory_address, data2write)"""
+        process = self.hwnd
+        written = process.write_dword( address, data )
+        return written
+
+    def write_qword(self, address, data):
+        "Write to process memory. (memory_address, data2write)"""
+        process = self.hwnd
+        written = process.write_qword( address, data )
+        return written
+
+    def search(self, _bytes, minAddr, maxAddr):
+        """
+        Search minAddr through maxAddr for _bytes. (_bytes, minAddr, maxAddr).
+        Returns a generator iterable containing memory addresses.
+        """
+        return self.hwnd.search_bytes(_bytes, minAddr, maxAddr)
+
+    def address_from_label(self, name):
+        """Returns the memory address(es) that match the label name. (name)"""
+        return self.hwnd.resolve_label(name)
 
     def load_dll(self, filename):
         """Inject filename.dll into our process. (filename)"""
         process = self.hwnd
         process.inject_dll( filename )
+        return True
+
+    def safe_exit(self):
+        self.hwnd.close_handle()
         return True
 
