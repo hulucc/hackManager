@@ -25,7 +25,7 @@ Here are a few working examples below:
     # Absolute memory address
     BLACKOPS_RECOIL_ADDRESS = 0x004AF328
     # You can also supply the base address and a offset like, i.e.:
-    # BLACKOPS_RECOIL_ADDRESS = instance.base_address(0x400000) + 0xAF328
+    # BLACKOPS_RECOIL_ADDRESS = instance.base_address + 0xAF328
 
     # No recoil value
     BLACKOPS_NO_RECOIL_VALUE = 117
