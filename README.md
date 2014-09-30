@@ -41,6 +41,7 @@ Here are a few working examples below:
 > The purpose of test apps is to learn how to read data structures and access their individual attributes, i.e.: "health", "name", "position", "level", etc.
 
     from hackManager.test import Test
+    
     class Player(Test):
         def __init__(self, name, **kwargs):
             Test.__init__(self, name, **kwargs)
