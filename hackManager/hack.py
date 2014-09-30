@@ -4,8 +4,8 @@ import os
 
 __website__ = "FindADownload.net"
 __author__ = "David A"
-__version__ = "1.1"
-__date__ = "09/21/2014"
+__version__ = "1.2"
+__date__ = "09/30/2014"
 
 
 class Hack(object):
