@@ -30,7 +30,6 @@ Here are a few working examples below:
     # No recoil value
     BLACKOPS_NO_RECOIL_VALUE = 117
 
-    cheat_engine = Hack.change_window_title("Cheat Engine 6.1", "Changed")
     target = "t6mp.exe"
     instance = Hack(target)
     instance.findProcess()
