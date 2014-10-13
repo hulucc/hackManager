@@ -49,7 +49,7 @@ Here are a few working examples below:
 
     from hackManager.hack import Hack
     cheat_engine = Hack.change_window_title("Cheat Engine 6.1", "Changed")
-> This allows use to use Cheat Engine to find memory addresses without it being detected.
+> This allows us to use Cheat Engine to find memory addresses without it being detected.
 
 #####Creating test apps for testing hacks
 > The purpose of test apps is to learn how to read data structures and access their individual attributes, i.e.: "health", "name", "position", "level", etc.
