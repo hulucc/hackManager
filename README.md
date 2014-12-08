@@ -18,6 +18,23 @@ PyPi Installation (Optional): `pip install hackManager`
 
 Here are a few working examples below:
 
+
+#####Kernel / DLL Hooking
+
+    from hackManager.hack import Hack
+
+    def sendto(event, ra, s, buf, length, flags, to, tolength):
+        data = event.get_process().peek(buf, length)
+        print "Send: " + data + "\n"
+
+
+    h = Hack("rust_server.exe")
+    h.add_hook("ws2_32.dll", "sendto", sendto)
+    h.hook()
+    h.safe_exit()
+
+> You can hook onto Kernel and DLL function within' a process. In this example, we hook onto RUST's(game) Dedicated Server and hook onto its WinSock SendTo DLL function calls. This allows us to sniff(analyze) process-specific traffic.
+
 #####Call of Duty Black Ops 2(PC) - No Recoil
 
     from hackManager.hack import Hack
