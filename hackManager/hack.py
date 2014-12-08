@@ -1,11 +1,35 @@
 import winappdbg
+import inspect
 import os
 
 
-__website__ = "FindADownload.net"
-__author__ = "David A"
-__version__ = "1.2"
-__date__ = "09/30/2014"
+__websites__ = "findadownload.net,warbandlife.com,froweey.com,psvgaming.com"
+__info__ = "www.warbandlife.com, join the forums!"
+__author__ = "David A(Froweey)"
+__version__ = "2.3.0"
+__date__ = "12/8/2014"
+
+
+
+class BasicEventHandler(winappdbg.EventHandler):
+    """EventHandler for our winappdbg debugger."""
+    def __init__(self, hook_dict):
+        winappdbg.EventHandler.__init__(self)
+        self.hooks = hook_dict
+    def load_dll(self, event):
+        pid = event.get_pid()
+        module = event.get_module()
+        for dict_module_name in list(self.hooks.keys()):
+            values = self.hooks.get(dict_module_name)
+            for entry in values:
+                dict_module_function_name, dict_module_function = entry
+                if module.match_name(dict_module_name):
+                    event.debug.hook_function(
+                        pid,
+                        module.resolve(dict_module_function_name),
+                        dict_module_function,
+                        paramCount = len(inspect.getargspec(dict_module_function)[0])-2
+                    )
 
 
 class Hack(object):
@@ -27,6 +51,7 @@ class Hack(object):
         self.name = processName
         self.threads = {}
         self.hwnd = None
+        self.hook_dict = {}
         self.base_address = None
         self.last_address = None
         self.running = []
@@ -41,6 +66,27 @@ class Hack(object):
         self.last_address = self.module_base_dict.get(
             self.module_base_dict.keys()[::-1][0]
         )
+
+    def add_hook(self, module_name, function_name, function_handle):
+        key = self.hook_dict.get(module_name)
+        if key is not None:
+            key.append((function_name, function_handle))
+        else:
+            self.hook_dict[module_name] = [(function_name, function_handle)]
+            
+    def hook(self):
+        """Hook onto one or more of the processes module functions. I.E.: hook_dict = {'ws2_32.dll': ['send', 'sendto']}; Hack('process_name.exe').hook(hook_dict)"""
+        if self.hwnd is None:
+            raise ValueError, "You need to specify the process name, i.e.: Hack('process_name.exe').hook()"
+
+        if len(self.hook_dict.keys()) == 0:
+            raise ValueError, "You need to call Hack().add_hook() first! You currently haven't added any hooks!"       
+        debug = winappdbg.Debug( BasicEventHandler(self.hook_dict) )
+        try:
+            debug.attach(self.hwnd.get_pid())
+            debug.loop()
+        finally:
+            debug.stop()
 
     def get_threads(self):
         """
@@ -112,7 +158,10 @@ class Hack(object):
                 module_name = os.path.basename(module.get_filename())
                 self.module_base_dict[module_name] = module.get_base()
 
-        self.set_last_address()
+        try:
+            self.set_last_address()
+        except IndexError, e:
+            pass
 
     def read(self, address, length):
         """
@@ -160,8 +209,8 @@ class Hack(object):
         return (self.hwnd.read_structure(address),
                 self.hwnd.get_label_at_address(address))
 
-    def read_string(self, address):
-        return (self.hwnd.read_string(address),
+    def read_string(self, address, charLength):
+        return (self.hwnd.read_string(address, charLength),
                 self.hwnd.get_label_at_address(address))
 
     def write(self, address, data):
