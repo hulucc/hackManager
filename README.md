@@ -68,7 +68,7 @@ http://msdn.microsoft.com/en-us/library/windows/desktop/ms740148%28v=vs.85%29.as
 #####Changing Cheat Engine's Title
 
     from hackManager.hack import Hack
-    cheat_engine = Hack.change_window_title("Cheat Engine 6.1", "Changed")
+    Hack.change_window_title("Cheat Engine 6.1", "Changed")
 > This allows us to use Cheat Engine to find memory addresses without it being detected.
 
 #####Creating test apps for testing hacks
