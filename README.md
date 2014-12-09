@@ -2,7 +2,7 @@
 
 ***
 
-> Process memory hacking made easy.
+> hackManager is a set of tools created to ease the process of hack and anti-hack development.
 
 
 Requirements: Python 2.6 or 2.7(recommended).
