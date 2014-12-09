@@ -118,4 +118,30 @@ I recommend py2exe to compile python scripts to Windows executables.
     
 > In this example we are hooking on the game's Winsock sendto DLL function and accessing its Structure directly via `ctypes`. We are also accessing the data directly via `peek`. Both methods work great, however, if you want to access Structure fields in a clean manner, the `ctypes` approach is preferred.
     
+####Retrieving and interacting with running threads
+> You can retrieve the list of the processes running threads with the `Hack.get_threads()` class-method. You can use this to your advantage to supervise the amount of threads your processes currently has running and to analyze them individually. Remember that hackManager is built on top of `winappdbg`, thus you are able to execute thread-related class-method like, i.e: `thread_instance.set_name()`, `thread_instance.is_hidden()`, `thread_instance.set_process()`, `thread_instance.kill()`, `thread_instance.name()`, `thread_instance.resume()`, `thread_instance.suspend()`, to name a few. 
+> When you call `Hack.get_threads()`, the list of threads are stored on your `Hack()` instances `thread` global variable. Thus you can access it with `Hack_instance.threads`. It's stored as a dictionary. The thread id's being the keys for the dictionary.
+> Check the `winappdbg` documentation for more information regarding iteraction with threads. Remember: hackManager returns `winappdbg.Thread` instances.
+
+    from hackManager.hack import Hack
     
+    h = Hack("game.exe")
+    h.get_threads()
+    print h.threads # returns dictionary, with the keys being the individual threads id's.
+
+####Retrieving the list of imported DLLs(libraries).
+> You can retrieve the list of loaded(imported) DLLs(libraries) within' the process by accessing the `module_base_dict` global variable. The `module_base_dict` is a dictionary with the keys being the module names and the values being their base address.
+
+    from hackManager.hack import Hack
+    
+    h = Hack("game.exe")
+    print h.module_base_dict
+
+
+####Retrieving list of running processes
+> You can retrieve the list of currently running processes by not supplying a target process name within' your `Hack()` instance. Then you access the list by calling `Hack_instance.running`.
+
+    from hackManager.hack import Hack
+    
+    h = Hack()
+    print h.running
