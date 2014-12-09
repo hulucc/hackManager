@@ -121,7 +121,7 @@ I recommend py2exe to compile python scripts to Windows executables.
 ####Retrieving and interacting with running threads
 > You can retrieve the list of the processes running threads with the `Hack.get_threads()` class-method. You can use this to your advantage to supervise the amount of threads your processes currently has running and to analyze them individually. Remember that hackManager is built on top of `winappdbg`, thus you are able to execute thread-related class-methods like, i.e: `thread_instance.set_name()`, `thread_instance.is_hidden()`, `thread_instance.set_process()`, `thread_instance.kill()`, `thread_instance.name()`, `thread_instance.resume()`, `thread_instance.suspend()`, to name a few. 
 > When you call `Hack.get_threads()`, the list of threads are stored on your `Hack()` instances `thread` global variable. Thus you can access it with `Hack_instance.threads`. It's stored as a dictionary. The thread id's being the keys for the dictionary.
-> Check the `winappdbg` documentation for more information regarding iteraction with threads. Remember: hackManager returns `winappdbg.Thread` instances.
+> Check the `winappdbg` documentation for more information regarding iteraction with threads. *Remember:* hackManager returns `winappdbg.Thread` instances.
 
     from hackManager.hack import Hack
     
