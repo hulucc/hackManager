@@ -130,7 +130,7 @@ I recommend py2exe to compile python scripts to Windows executables.
     print h.threads # returns dictionary, with the keys being the individual threads id's.
 
 ####Retrieving the list of imported DLLs(libraries).
-> You can retrieve the list of loaded(imported) DLLs(libraries) within' the process by accessing the `module_base_dict` global variable. The `module_base_dict` is a dictionary with the keys being the module names and the values being their base address.
+> You can retrieve the list of loaded(imported) DLLs(libraries) within' the process by accessing the `module_base_dict` global variable. The `module_base_dict` is a dictionary with the keys being the module names and the values being their base addresses.
 
     from hackManager.hack import Hack
     
