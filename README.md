@@ -34,7 +34,9 @@ Here are a few working examples below:
     h.hook()
     h.safe_exit()
 
-> You can hook onto Kernel and DLL function within' a process. In this example, we hook onto RUST's(game) Dedicated Server and hook onto its WinSock SendTo DLL function calls. This allows us to sniff(analyze) process-specific traffic.
+> You can hook onto Kernel and DLL functions within' a process. In this example, we hook onto RUST's(game) Dedicated Server and hook onto its WinSock SendTo DLL function calls. This allows us to sniff(analyze) process-specific traffic. This requires a little research on your part though. For example, you need to know what parameters the DLL functions require. You can easily pull this up on Google Search by typing something like, i.e: "WinSock sendto msdn". The Microsoft Developer Network is fulled with tons of documentation for its DLLs like Winsock. In this example, I referenced the following documentation:
+http://msdn.microsoft.com/en-us/library/windows/desktop/ms740148%28v=vs.85%29.aspx
+
 
 #####Call of Duty Black Ops 2(PC) - No Recoil
 
