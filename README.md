@@ -87,3 +87,35 @@ http://msdn.microsoft.com/en-us/library/windows/desktop/ms740148%28v=vs.85%29.as
 
 I recommend py2exe to compile python scripts to Windows executables.
 (http://www.py2exe.org/)
+
+####Accessing and modifying data structures
+> Most games and computer software come with structures that group data together. These structures can be accessed with hackManager and even modified! 
+
+    from hackManager.hack import Hack
+    import ctypes
+    
+    # Winsock sockaddr structure. Documented at:   
+    # http://msdn.microsoft.com/en-us/library/windows/desktop/ms740496%28v=vs.85%29.aspx
+    
+    class sockaddr(ctypes.Structure):
+        _fields_ = [
+            ("sa_family", ctypes.c_ushort),
+            ("sa_data", ctypes.c_char * 14),
+        ]
+        
+    def sendto(event, ra, s, buf, length, flags, to, tolength):
+        p = event.get_process()
+        data = p.peek(buf, length)
+        to_struct = p.read_structure(to, sockaddr)
+        print "BUFFER DATA: " + repr(data) + "\n"
+        print "ACCESSING SPECIFIC STRUCTURE sa_data field:", repr(to_struct.sa_data)
+        print "PEEKING WHOLE STRUCTURE DATA:", repr(p.peek(to, tolength))
+    
+    game = Hack("game.exe")
+    h.add_hook("ws2_32.dll", "sendto", sendto)
+    h.hook()
+    h.safe_exit()
+    
+> In this example we are hooking on the game's Winsock sendto DLL function and accessing its Structure directly via `ctypes`. We are also accessing the data directly via `peek`. Both methods work great, however, if you want to access Structure fields in a clean manner, the `ctypes` approach is preferred.
+    
+    
