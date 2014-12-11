@@ -6,8 +6,8 @@ import os
 __websites__ = "findadownload.net,warbandlife.com,froweey.com,psvgaming.com"
 __info__ = "www.warbandlife.com, join the forums!"
 __author__ = "David A(Froweey)"
-__version__ = "2.3.0"
-__date__ = "12/8/2014"
+__version__ = "2.4.0"
+__date__ = "12/11/2014"
 
 
 
@@ -20,16 +20,24 @@ class BasicEventHandler(winappdbg.EventHandler):
         pid = event.get_pid()
         module = event.get_module()
         for dict_module_name in list(self.hooks.keys()):
-            values = self.hooks.get(dict_module_name)
-            for entry in values:
-                dict_module_function_name, dict_module_function = entry
-                if module.match_name(dict_module_name):
-                    event.debug.hook_function(
-                        pid,
-                        module.resolve(dict_module_function_name),
-                        dict_module_function,
-                        paramCount = len(inspect.getargspec(dict_module_function)[0])-2
-                    )
+
+            if isinstance(dict_module_name, int):
+                # Internal function hooks.
+                dict_module_function, signatures = self.hooks.get(dict_module_name)[0]
+                event.debug.hook_function(pid, dict_module_name, dict_module_function, signature = signatures)
+
+            else:
+                # External DLL function hooks.
+                values = self.hooks.get(dict_module_name)
+                for entry in values:
+                    dict_module_function_name, dict_module_function = entry
+                    if module.match_name(dict_module_name):
+                        event.debug.hook_function(
+                            pid,
+                            module.resolve(dict_module_function_name),
+                            dict_module_function,
+                            paramCount = len(inspect.getargspec(dict_module_function)[0])-2
+                        )
 
 
 class Hack(object):
@@ -68,11 +76,16 @@ class Hack(object):
         )
 
     def add_hook(self, module_name, function_name, function_handle):
+        """Add hook to an external DLL function."""
         key = self.hook_dict.get(module_name)
         if key is not None:
             key.append((function_name, function_handle))
         else:
             self.hook_dict[module_name] = [(function_name, function_handle)]
+
+    def add_internal_hook(self, address, function_handle, signature=()):
+        """Add hook to an internal function."""
+        self.hook_dict[address] = [(function_handle, signature)]
             
     def hook(self):
         """Hook onto one or more of the processes module functions. I.E.: hook_dict = {'ws2_32.dll': ['send', 'sendto']}; Hack('process_name.exe').hook(hook_dict)"""
