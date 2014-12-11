@@ -19,7 +19,7 @@ PyPi Installation (Optional): `pip install hackManager`
 Here are a few working examples below:
 
 
-####Internal Function Hooking
+#####Internal Function Hooking
 
     from hackManager.hack import Hack
 
