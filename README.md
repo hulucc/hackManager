@@ -19,7 +19,24 @@ PyPi Installation (Optional): `pip install hackManager`
 Here are a few working examples below:
 
 
-#####Kernel / DLL Hooking
+####Internal Function Hooking
+
+    from hackManager.hack import Hack
+
+
+    def function_handle(event, ra, **kwargs):
+        print "Function hit!"
+        
+    h = Hack("mb_warband.exe")
+    h.add_internal_hook(0x004961FC, function_handle)
+    h.hook()
+    h.safe_exit()
+
+> You can hook onto the processes internal functions following this method.
+add_internal_hook takes three parameters, the third being optional: function_memory_address, function_handle, signatures. The signatures parameter allows you to parse values related to this function directly from the stack.
+
+
+#####External / DLL Hooking
 
     from hackManager.hack import Hack
 
